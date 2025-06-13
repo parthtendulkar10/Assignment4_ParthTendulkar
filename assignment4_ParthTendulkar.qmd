@@ -1,0 +1,129 @@
+---
+title: "What is your blogpost title? Add it here??"
+subtitle: "Assignment 4 ETC5512"
+author: "Parth Tendulkar"
+format: html
+editor: visual
+---
+
+::: panel-tabset
+<!-- Task 1 Tab: Data and Documenting -->
+
+## Data and Documenting
+
+
+### Research Question
+
+<big> **Does the age and gender dynamics of lead actors influence the commercial success of movies?**</big>
+
+Hollywood has historically exhibited a noticeable pattern in casting, where older male actors are frequently paired with significantly younger female counterparts—a trend far less common in reverse. This project aims to examine whether such casting decisions are financially beneficial or merely reflective of entrenched industry biases. To explore this, two datasets were utilized: one containing information on actor ages and gender, and another detailing movie budgets, revenues, and profits. Together, these datasets provided a suitable foundation for analyzing the financial implications of age and gender dynamics in casting.
+
+### Data Being used
+
+**This analysis draws on two publicly available datasets:**
+
+-   [**Movie Revenue Dataset**](https://github.com/ntdoris/movie-revenue-analysis/blob/main/README.md): This dataset includes key financial indicators such as production budget, domestic and international gross earnings, total profit, return on investment (ROI), and film genre.
+-   [**Hollywood Age Gap Dataset**](https://hollywoodagegap.com): This dataset captures detailed information on romantic leads in films, including actor names, their ages at the time of the film’s release, character genders, and the age differences between paired actors.
+
+**These datasets are well-suited for the objectives of this study for the following reasons:**
+
+-   They collectively address both financial performance and casting patterns based on age and gender.
+-   Relevant variables (e.g., age, gender, profit, ROI) are clearly defined and readily available.
+-   The datasets are cleanly structured and easy to process for exploratory and comparative analysis.
+-   The Hollywood Age Gap dataset does not have a formal license but permits usage with proper attribution, which has been acknowledged.
+-   Both datasets are publicly accessible and appropriate for the level of analysis required in this assignment.
+
+### Downloading Data
+
+**Steps to Download *Hollywood Age Gap* Dataset Data**
+
+-   Navigate to the official website: [**www.hollywoodagegap.com**](https://hollywoodagegap.com)\
+-   Click on the **"Download Data"** button located in the **Top Right Corner** of the homepage.
+-   Save the downloaded **CSV file** into the `data` folder within the project directory to ensure proper access during analysis.
+
+**Steps to Download *Movie Revenue Dataset* Dataset Data**
+
+-   Go to the **movie-revenue-analysis** Github Repository:\
+    visit <https://github.com/ntdoris/movie-revenue-analysis>
+-   Locate the dataset:\
+    In the repo, go to the `data` folder. and locate `final_dataset.csv`.
+-   Download the file:
+    -   Click on the dataset file.
+    -   Click the **"Download raw file"** button.\
+    
+-   Save the downloaded **CSV file** into the `data` folder within the project directory to ensure proper access during analysis.
+
+### Data Analysis
+
+1.  **Load Libraries**
+
+```{r Load Libraries}
+
+library(tidyverse)
+library(here)
+library(readr)
+library(ggplot2)
+
+```
+
+2.  **Read in the Data**
+
+```{r Read Data}
+
+age_gaps_raw <- read_csv(here("data/movies.csv"))
+
+revenue_raw <- read_csv(here("data/final_dataset.csv"))
+
+```
+
+3. **join datasets**
+
+```{r Join Datasets}
+
+joined_data <- age_gaps_raw %>%
+  left_join(revenue_raw, by = c("Movie Name" = "movie", "Release Year" = "year"))
+
+# cheking number of non matches
+summary(joined_data$production_budget)
+sum(!is.na(joined_data$production_budget))
+
+#trying first plot
+ggplot(joined_data, aes(x = `Actor 1 Age`, y = profit)) +
+  geom_point(alpha = 0.5) 
+
+```
+
+
+### Remember
+
+Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+
+<!-- Task 2 Tab: Writing your blogpost -->
+
+## Blog post
+
+### What's in this section
+
+Here is where you should write your blogpost! (Task 2)
+
+### Blogpost Structure
+
+There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+
+1.  Title (is set at the top of this document)
+2.  Motivation\
+3.  Data\
+4.  Analysis\
+5.  Conclusions\
+6.  References
+
+<!-- Task 3 Tab: Behind the Scenes -  -->
+
+## Behind the Scenes
+
+### What's in this section
+
+Here is where you should tell us about your reflection on your analysis (Task 3).
+
+Again, these are the details about **your** perspective and the gritty details behind the scenes of your analysis.
+:::
