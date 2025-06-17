@@ -63,6 +63,8 @@ library(tidyverse)
 library(here)
 library(readr)
 library(ggplot2)
+library(patchwork)
+library(scales)
 
 ```
 
@@ -102,13 +104,105 @@ joined_data <- joined_data %>%
 
 glimpse(joined_data)
 
-#trying first plot
-ggplot(joined_data, aes(x = `Actor 1 Age`, y = profit)) +
-  geom_point(alpha = 0.5, color = "steelblue") +
-  labs(title = "Actor 1 Age vs Profit")
+```
+
+5. **create new variable**
+
+```{r new_variables}
+
+joined_data <- joined_data %>%
+  mutate(
+    `Older Actor` = case_when(
+      `Actor 1 Age` > `Actor 2 Age` ~ `Actor 1 Gender`,
+      `Actor 1 Age` < `Actor 2 Age` ~ `Actor 2 Gender`,
+      TRUE ~ "Same age"
+    ),
+    `Avg Actor Age` = rowMeans(select(., `Actor 1 Age`, `Actor 2 Age`), na.rm = TRUE)
+  )
+
+joined_data <- joined_data %>%
+  mutate(`Profit (Millions)` = round(profit / 1000000))
+
+joined_data <- joined_data %>%
+  mutate(`Age Group` = cut(`Avg Actor Age`, breaks = c(15, 30, 40, 50, 60, 100),
+                           labels = c("15–30", "31–40", "41–50", "51–60", "60+"),
+                           right = FALSE))
 
 ```
 
+6. Plot 1: Average Actor Age vs Profit
+
+```{r}
+
+p1 <- ggplot(joined_data, aes(x = `Age Group`, y = `Profit (Millions)`, fill = `Age Group`)) +
+  geom_violin(trim = FALSE, alpha = 0.6) +
+  geom_boxplot(width = 0.1, color = "black", alpha = 0.8) +
+  labs(title = "Profit Distribution by Actor Age Group",
+       x = "Average Actor Age Group", y = "Profit (Millions USD)") +
+  theme_minimal()
+
+p1
+```
+
+```{r}
+
+# Profit vs Age Difference
+p2 <- ggplot(joined_data, aes(x = `Age Difference`, y = `Profit (Millions)`)) +
+  geom_point(alpha = 0.5, color = "#6a0dad") +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "Profit vs Age Gap",
+    x = "Age Gap (Years)",
+    y = "Profit (Millions USD)"
+  ) +
+  theme_minimal()
+
+# ROI vs Age Difference
+p3 <- ggplot(joined_data, aes(x = `Age Difference`, y = roi)) +
+  geom_point(alpha = 0.5, color = "#ff5733") +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "ROI vs Age Gap",
+    x = "Age Gap (Years)",
+    y = "Return on Investment (ROI)"
+  ) +
+  theme_minimal()
+
+# Combine side by side
+p2 + p3
+
+
+```
+
+```{r}
+
+p4 <- ggplot(joined_data, aes(x = `Older Actor`, y = `Profit (Millions)`, fill = `Older Actor`)) +
+  geom_boxplot() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "Profit by Older Actor Gender",
+    x = "",
+    y = "Profit (Millions USD)"
+  ) +
+  theme_minimal()
+
+# ROI by Older Actor
+p5 <- ggplot(joined_data, aes(x = `Older Actor`, y = roi, fill = `Older Actor`)) +
+  geom_boxplot() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "ROI by Older Actor Gender",
+    x = "",
+    y = "Return on Investment (ROI)"
+  ) +
+  theme_minimal()
+
+# Combine side-by-side
+p4 + p5
+
+```
 
 ### Remember
 
