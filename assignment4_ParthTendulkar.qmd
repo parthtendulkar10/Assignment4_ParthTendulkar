@@ -75,21 +75,37 @@ age_gaps_raw <- read_csv(here("data/movies.csv"))
 revenue_raw <- read_csv(here("data/final_dataset.csv"))
 
 ```
+3. **Cleaning Data**
 
-3. **join datasets**
+```{r}
+
+age_gaps_clean <- age_gaps_raw %>%
+  mutate(join_title = str_to_lower(str_trim(`Movie Name`)))
+
+revenue_clean <- revenue_raw %>%
+  mutate(join_title = str_to_lower(str_trim(movie)))
+
+```
+
+
+4. **join datasets**
 
 ```{r Join Datasets}
 
-joined_data <- age_gaps_raw %>%
-  left_join(revenue_raw, by = c("Movie Name" = "movie", "Release Year" = "year"))
+joined_data <- age_gaps_clean %>%
+  left_join(revenue_clean, by = c("join_title", 
+                                  "Release Year" = "year"))
 
-# cheking number of non matches
-summary(joined_data$production_budget)
-sum(!is.na(joined_data$production_budget))
+#filtering out non matches
+joined_data <- joined_data %>%
+  filter(!is.na(production_budget))
+
+glimpse(joined_data)
 
 #trying first plot
 ggplot(joined_data, aes(x = `Actor 1 Age`, y = profit)) +
-  geom_point(alpha = 0.5) 
+  geom_point(alpha = 0.5, color = "steelblue") +
+  labs(title = "Actor 1 Age vs Profit")
 
 ```
 
