@@ -1,0 +1,15 @@
+Variable_Name,Data_Type,Units,Factor_Levels,Missing_Values,Derivation,Description
+Movie Name,character,,,0,Original,Title of the film. Used as a key for joining datasets.
+Release Year,numeric,Year,,0,Original,Year in which the movie was released.
+Actor 1 Age,numeric,Years,,0,Original,Age of the first listed romantic lead at the time of release.
+Actor 2 Age,numeric,Years,,0,Original,Age of the second listed romantic lead at the time of release.
+Actor 1 Gender,character,,"man, woman",0,Original,Gender of Actor 1.
+Actor 2 Gender,character,,"woman, man",0,Original,Gender of Actor 2.
+Age Difference,numeric,Years,,0,Original,Absolute difference between Actor 1 and Actor 2Õs age
+Older Actor,character,,"man, woman, Same age",0,Derived,Which actor was older in the pair
+Avg Actor Age,numeric,Years,,0,Derived,Average of Actor 1 and Actor 2Õs age.
+Age Group,factor,,"51-61, 41-51, 31-41, 60+, 15-31",0,Derived,Binned version of average age into age ranges
+production_budget,numeric,USD,,0,Original,Production cost of the movie in U.S. dollars.
+profit,numeric,USD,,0,Original,Total profit made by the film (gross Ð budget).
+Profit (Millions),numeric,Millions USD,,0,Derived,Profit value transformed into millions for easier interpretation.
+roi,numeric,Ratio,,0,Original,Return on investment (profit divided by production budget).

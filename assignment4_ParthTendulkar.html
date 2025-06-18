@@ -70,13 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="assignment4_ParthTendulkar_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
+<link rel="stylesheet" href="tabs.css">
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
 
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -86,7 +87,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -104,29 +105,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Data and Documenting</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Blog post</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Behind the Scenes</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="tab-buttons">
+<div>
+<p><button class="tab-button active" id="tab1" onclick="activateTab('tab1')">📊 Data</button> <button class="tab-button" id="tab2" onclick="activateTab('tab2')">📝 Blog</button> <button class="tab-button" id="tab3" onclick="activateTab('tab3')">🎬 Behind</button></p>
+</div>
+</div>
+<div id="tab-content" class="tab-content tab1-bg">
+<div id="panel-tab1" class="tab-panel active">
+<section id="data-and-documenting" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-documenting">Data and Documenting</h2>
 <section id="research-question" class="level3">
 <h3 class="anchored" data-anchor-id="research-question">Research Question</h3>
 <p><big> <strong>Does the age and gender dynamics of lead actors influence the commercial success of movies?</strong></big></p>
-<p>Hollywood has historically exhibited a noticeable pattern in casting, where older male actors are frequently paired with significantly younger female counterparts—a trend far less common in reverse. This project aims to examine whether such casting decisions are financially beneficial or merely reflective of entrenched industry biases. To explore this, two datasets were utilized: one containing information on actor ages and gender, and another detailing movie budgets, revenues, and profits. Together, these datasets provided a suitable foundation for analyzing the financial implications of age and gender dynamics in casting.</p>
+<p>Hollywood has historically exhibited a noticeable pattern in casting, with older male actors frequently paired with significantly younger female counterparts—an occurrence far less common in reverse. This project aims to investigate whether such casting decisions are financially beneficial or simply reflective of longstanding industry biases. By combining a dataset containing actor ages and gender with another comprising detailed movie profit information, this analysis seeks to determine whether these casting patterns correlate with financial performance or persist without economic justification.</p>
 </section>
 <section id="data-being-used" class="level3">
 <h3 class="anchored" data-anchor-id="data-being-used">Data Being used</h3>
-<p><strong>This analysis draws on two publicly available datasets:</strong></p>
+<p><strong>This analysis utilizes two publicly available datasets:</strong></p>
 <ul>
-<li><a href="https://github.com/ntdoris/movie-revenue-analysis/blob/main/README.md"><strong>Movie Revenue Dataset</strong></a>: This dataset includes key financial indicators such as production budget, domestic and international gross earnings, total profit, return on investment (ROI), and film genre.</li>
-<li><a href="https://hollywoodagegap.com"><strong>Hollywood Age Gap Dataset</strong></a>: This dataset captures detailed information on romantic leads in films, including actor names, their ages at the time of the film’s release, character genders, and the age differences between paired actors.</li>
+<li><a href="https://github.com/ntdoris/movie-revenue-analysis/blob/main/README.md"><strong>Movie Revenue Dataset</strong></a>: This dataset includes information such as production budget, domestic and international gross earnings, total profit, return on investment (ROI), and genre classifications.</li>
+<li><a href="https://hollywoodagegap.com"><strong>Hollywood Age Gap Dataset</strong></a>: This dataset includes actor names, their ages at the time of each film’s release, character genders, and the age gaps between romantic leads.</li>
 </ul>
 <p><strong>These datasets are well-suited for the objectives of this study for the following reasons:</strong></p>
 <ul>
-<li>They collectively address both financial performance and casting patterns based on age and gender.</li>
-<li>Relevant variables (e.g., age, gender, profit, ROI) are clearly defined and readily available.</li>
-<li>The datasets are cleanly structured and easy to process for exploratory and comparative analysis.</li>
-<li>The Hollywood Age Gap dataset does not have a formal license but permits usage with proper attribution, which has been acknowledged.</li>
-<li>Both datasets are publicly accessible and appropriate for the level of analysis required in this assignment.</li>
+<li>Together, these datasets provide comprehensive coverage of both financial performance and casting demographics.</li>
+<li>Key variables required for analysis (age, profit, ROI, gender) are readily available and well-structured.</li>
+<li>Data is in a clean and accessible format, facilitating efficient processing and exploration.</li>
+<li>The age gap dataset does not have a formal license but permits use with attribution, which will be appropriately cited.</li>
+<li>Both datasets are suitable sample sources for the analytical scope expected at this academic level.</li>
 </ul>
 </section>
 <section id="downloading-data" class="level3">
@@ -158,6 +164,7 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <ol type="1">
 <li><strong>Load Libraries</strong></li>
 </ol>
+<p>Loading all the essential libraries for data exploration and analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
@@ -169,6 +176,7 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <ol start="2" type="1">
 <li><strong>Read in the Data</strong></li>
 </ol>
+<p>Read in the downloaded CSV’s in dataframes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>age_gaps_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/movies.csv"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -177,6 +185,7 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <ol start="3" type="1">
 <li><strong>Cleaning Data</strong></li>
 </ol>
+<p>Convert movie names in both datasets to lowercase (or any consistent format) to make sure they match properly during the join. Titles might look the same visually but mismatch due to case differences, extra spaces, or punctuation, so this helps avoid losing valid matches.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>age_gaps_clean <span class="ot">&lt;-</span> age_gaps_raw <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">join_title =</span> <span class="fu">str_to_lower</span>(<span class="fu">str_trim</span>(<span class="st">`</span><span class="at">Movie Name</span><span class="st">`</span>)))</span>
@@ -187,6 +196,7 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <ol start="4" type="1">
 <li><strong>join datasets</strong></li>
 </ol>
+<p>Join datasets using Movie names and release year and drop all the non matches so that we can use this data for accurate analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>joined_data <span class="ot">&lt;-</span> age_gaps_clean <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(revenue_clean, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"join_title"</span>, </span>
@@ -197,8 +207,17 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(production_budget))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="5" type="1">
-<li><strong>create new variable</strong></li>
+<li><strong>create new variables</strong></li>
 </ol>
+<p>Creating new variables:</p>
+<ul>
+<li><code>Older Actor</code> : Out of the pair what gender actor is older.<br>
+</li>
+<li><code>Avg Actor Age</code> : Mean of <code>Actor 1 Age</code> and <code>Actor 2 Age</code>.<br>
+</li>
+<li><code>Profit (Millions)</code> : Profit the movie made in Millions for easier understanding.</li>
+<li><code>Age Group</code> : Actor age binned into groups.</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>joined_data <span class="ot">&lt;-</span> joined_data <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -219,7 +238,7 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">right =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="6" type="1">
-<li>Plot 1: Average Actor Age vs Profit</li>
+<li><strong>Plot 1: Average Actor Age vs Profit</strong></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(joined_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Age Group</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Profit (Millions)</span><span class="st">`</span>, <span class="at">fill =</span> <span class="st">`</span><span class="at">Age Group</span><span class="st">`</span>)) <span class="sc">+</span></span>
@@ -229,6 +248,9 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Average Actor Age Group"</span>, <span class="at">y =</span> <span class="st">"Profit (Millions USD)"</span>) <span class="sc">+</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ol start="7" type="1">
+<li><strong>Plot 2: Age Difference vs Profit and ROI</strong></li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Profit vs Age Difference</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(joined_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Age Difference</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Profit (Millions)</span><span class="st">`</span>)) <span class="sc">+</span></span>
@@ -257,6 +279,9 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine side by side</span></span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>age_diff <span class="ot">&lt;-</span> p2 <span class="sc">+</span> p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ol start="8" type="1">
+<li><strong>Plot 2: Older Actor Gender vs Profit and ROI</strong></li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(joined_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Older Actor</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Profit (Millions)</span><span class="st">`</span>, <span class="at">fill =</span> <span class="st">`</span><span class="at">Older Actor</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -282,28 +307,31 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>older_actor_plot <span class="ot">&lt;-</span> p4 <span class="sc">+</span> p5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="remember" class="level3">
-<h3 class="anchored" data-anchor-id="remember">Remember</h3>
+<section id="addtional-information" class="level3">
+<h3 class="anchored" data-anchor-id="addtional-information">Addtional Information</h3>
 <p>Please mention any additional files that you want the markers to review, eg. read me, meta data etc.</p>
-<!-- Task 2 Tab: Writing your blogpost -->
+</section>
 </section>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="panel-tab2" class="tab-panel">
+<section id="blog-post" class="level2">
+<h2 class="anchored" data-anchor-id="blog-post">Blog post</h2>
 <section id="motivation" class="level3">
 <h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
-<p>One thing that’s always stood out to me in movies is how often we see older male leads paired with much younger female love interests. It’s a pattern that’s been normalized in Hollywood for decades — but I started wondering, does it actually pay off? Are these casting choices boosting a film’s profits, or are they just outdated traditions that filmmakers keep following without question?</p>
+<p>One thing you see all the time in movies is older male leads being cast opposite much younger female love interests. It’s been the norm in Hollywood for decades — so much so that most people barely question it anymore.</p>
+<p>But I started wondering: does this actually make financial sense? Are these casting choices boosting a film’s profits, or are they just outdated habits that the industry keeps repeating?</p>
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>To explore the link between casting age gaps and movie profitability, I used two main datasets.</p>
-<p>The first came from <a href="hollywoodagegap.com">hollywoodagegap.com</a>, which lists romantic lead pairings in movies — including how old both actors were at the time of release, who was older, and the size of the age gap.</p>
-<p>The second dataset, sourced from <a href="https://github.com/ntdoris/movie-revenue-analysis">GitHub Repository</a>, contained movie revenue details such as production budget, domestic and international gross, total profit, and return on investment (ROI).</p>
-<p>After cleaning both datasets, I merged them using the movie title and release year. To make the analysis more meaningful, I only kept rows that matched accurately. I also created a new column to indicate whether the man, woman, or neither was older in each pairing, and calculated the average age of the two leads. This average actor age was then grouped into age brackets (15–30, 31–40, etc.) to help uncover any trends across different age groups.</p>
+<p>The first came from <a href="hollywoodagegap.com">hollywoodagegap.com</a>, which includes details on romantic leads — how old each actor was at the time of the movie, who was older, and the size of the age gap.</p>
+<p>The second dataset, sourced from <a href="https://github.com/ntdoris/movie-revenue-analysis">GitHub Repository</a>, with info like production budget, domestic and international gross, total profit, and ROI.</p>
+<p>I cleaned both datasets and matched them using the movie title and release year. To keep things accurate, I only used rows that matched correctly. I also added a new column to identify whether the older actor in the romantic pair was the man, the woman, or if they were the same age. Finally, I calculated the average age of the pair and grouped it into bins like 15–30, 31–40, and so on — this helped make the analysis more structured and insightful.</p>
 </section>
 <section id="analysis" class="level3">
 <h3 class="anchored" data-anchor-id="analysis">Analysis</h3>
 <section id="do-younger-romantic-leads-lead-to-higher-profits" class="level4">
-<h4 class="anchored" data-anchor-id="do-younger-romantic-leads-lead-to-higher-profits">Do younger romantic leads lead to higher profits?</h4>
+<h4 class="anchored" data-anchor-id="do-younger-romantic-leads-lead-to-higher-profits"><big><strong>Do younger romantic leads lead to higher profits?</strong></big></h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -313,12 +341,11 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 </div>
 </div>
 </div>
-<p>The first plot shows how profit varies with the average age of romantic leads, grouped into age bins (15–30, 31–40, etc.) using a violin plot.</p>
-<p>Movies with younger leads (15–30) had the widest range of profits, including several major outliers. As the age increased, profits tended to drop and became more tightly clustered. The 60+ group was the most consistent but earned the least.</p>
-<p>This suggests that younger lead pairings may be more profitable, likely due to broader audience appeal, stronger marketing, or more commercial genres.</p>
+<p>The first plot examined how the average age of romantic leads relates to profit, using age bins like 15–30, 31–40, etc., shown through a violin plot. The 15–30 group had the widest profit range with some standout outliers, suggesting a few highly profitable films. As the age group increased, profits declined and became more tightly packed. The 60+ group was the most stable in terms of profit variation but had the lowest overall returns.</p>
+<p>This suggests that films with younger romantic leads tend to be more profitable — possibly because they receive more marketing, target broader audiences, or belong to more commercial genres.</p>
 </section>
 <section id="what-happens-when-the-age-gap-between-leads-gets-larger" class="level4">
-<h4 class="anchored" data-anchor-id="what-happens-when-the-age-gap-between-leads-gets-larger">What happens when the age gap between leads gets larger?</h4>
+<h4 class="anchored" data-anchor-id="what-happens-when-the-age-gap-between-leads-gets-larger"><big><strong>What happens when the age gap between leads gets larger?</strong></big></h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -328,12 +355,12 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 </div>
 </div>
 </div>
-<p>This next set of plots looked at how the age gap between romantic leads relates to profit and ROI.</p>
-<p>Both showed a clear downward trend — as the age gap increased, financial performance dropped. Most of the high-profit films had age gaps under 10 years. While a few exceptions exist, they were rare.</p>
-<p>This suggests that larger age gaps may hurt a film’s success, possibly because audiences don’t relate as well to those pairings.</p>
+<p>These next two plots looked at how the age gap between romantic leads affects profit and ROI. In both cases, there was a clear downward trend — the larger the age gap, the lower the financial return.</p>
+<p>Most of the top-performing films had an age gap under 10 years, while movies with bigger gaps generally saw lower profits and ROI. There were a few exceptions, but they were rare.</p>
+<p>This points to a possible disconnect: casting couples with large age differences may not resonate as well with audiences — and it might not pay off at the box office either.</p>
 </section>
 <section id="does-it-matter-whether-the-man-or-woman-is-older" class="level4">
-<h4 class="anchored" data-anchor-id="does-it-matter-whether-the-man-or-woman-is-older">Does it matter whether the man or woman is older?</h4>
+<h4 class="anchored" data-anchor-id="does-it-matter-whether-the-man-or-woman-is-older"><big><strong>Does it matter whether the man or woman is older?</strong></big></h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -343,30 +370,70 @@ In the repo, go to the <code>data</code> folder. and locate <code>final_dataset.
 </div>
 </div>
 </div>
-<p>Here we compared profit and ROI based on which actor was older — the man, the woman, or if they were the same age.</p>
-<p>Profit stayed fairly consistent across all groups. But when it came to ROI, same-age pairings performed best. Interestingly, films with older female leads did just as well — if not slightly better — than those with older male leads.</p>
-<p>This challenges the long-standing stereotype that older women hurt box office success. The data suggests otherwise.</p>
+<p>These final set of plots compared profit and ROI based on which actor was older — the man, the woman, or if they were the same age.</p>
+<p>Profit levels were fairly consistent across all groups. But when it came to ROI, same-age pairings performed the best. Interestingly, movies with older female leads did just as well — if not slightly better — than those with older male leads.</p>
+<p>This challenges the old stereotype that older women can’t drive box office success. The data suggests they absolutely can.</p>
 </section>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
-<p>This analysis suggests that some of Hollywood’s long-standing casting habits don’t hold up financially. Younger romantic leads do tend to generate more profit, but large age gaps between them can actually lower a film’s ROI. Interestingly, same-age pairings came out strongest, especially when it comes to return on investment.</p>
-<p>There’s no real evidence that casting older men with younger women boosts box office performance. If anything, more balanced casting choices may be both creatively richer and commercially smarter. It might be time for studios to rethink what audiences really connect with — and what actually sells.</p>
+<p>Overall, this analysis suggests that some of Hollywood’s go-to casting choices aren’t really backed by the numbers.</p>
+<p>Younger romantic leads tend to bring in more profit, while larger age gaps between leads often lead to lower returns. Surprisingly, same-age pairings came out on top for ROI — and there’s no clear advantage to casting older men with younger women.</p>
+<p>If anything, the data points toward more balanced casting being a smarter move — both creatively and financially. Maybe it’s time for studios to rethink some of those old habits.</p>
 </section>
 <section id="references" class="level3">
 <h3 class="anchored" data-anchor-id="references">References</h3>
-<!-- Task 3 Tab: Behind the Scenes -  -->
+</section>
 </section>
 </div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<section id="whats-in-this-section" class="level3">
-<h3 class="anchored" data-anchor-id="whats-in-this-section">What’s in this section</h3>
-<p>Here is where you should tell us about your reflection on your analysis (Task 3).</p>
-<p>Again, these are the details about <strong>your</strong> perspective and the gritty details behind the scenes of your analysis.</p>
+<div id="panel-tab3" class="tab-panel">
+<section id="behind-the-scenes" class="level2">
+<h2 class="anchored" data-anchor-id="behind-the-scenes">Behind the Scenes</h2>
+<section id="unseen-work" class="level3">
+<h3 class="anchored" data-anchor-id="unseen-work">Unseen Work</h3>
+<p>There was definitely a lot of behind-the-scenes wrangling that didn’t make it to the blog. Matching the two datasets by movie title and release year was super tedious — some titles were formatted differently or had weird characters, so I had to manually clean a bunch. Also, just checking if age differences and gender columns made sense after merging took time. Creating the “who’s older” column seemed simple but ended up needing a few logic tweaks to get right. Most of the time went into cleaning stuff that should’ve just worked.</p>
+</section>
+<section id="challenges-faced" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-faced">Challenges Faced</h3>
+<p>Biggest challenge was merging the two datasets properly. I assumed it would be a straight match on movie title + year, but even small title changes (like extra spaces or colons) threw things off. I also didn’t expect profit to have such massive values that it had to be displayed in millions. Another challenge was figuring out how to represent profit when values were both negative and positive — some plots didn’t handle that well.</p>
+</section>
+<section id="future-improvements" class="level3">
+<h3 class="anchored" data-anchor-id="future-improvements">Future Improvements</h3>
+<p>One major limitation is that this only looks at a subset of movies — the ones that exist in both datasets. So the sample size could be biased. Also, I didn’t factor in genres or budget scale, which might affect profit trends. Ideally, I’d add genre grouping or control for budget levels next time. Another thing: I didn’t include any qualitative stuff like reviews or audience scores, which could show why certain age gaps don’t work.</p>
+</section>
+<section id="iteration-process-5-versions" class="level3">
+<h3 class="anchored" data-anchor-id="iteration-process-5-versions">Iteration Process (5 versions)</h3>
+<ul>
+<li><p>Version 1 (4d61aa2169d856722a994f09c01748034aab4089):<br>
+In this first version, I loaded both datasets and previewed the structure. I attempted to join them by movie title only, but this led to poor match rates. The goal here was to understand the variables and check if there was potential for deeper analysis.</p></li>
+<li><p>Version 2 (d3c5e1f86fcc273e7e78d06f4e8ea4adde2b478c):<br>
+This version addressed the matching issue by trimming and lowercasing movie titles and joining them using both name and year. This improved the dataset integrity. Non-matching rows were dropped so only valid pairs remained. This version established a clean base for reliable analysis.</p></li>
+<li><p>Version 3 (2eb456c9781e68cacb85aa83b13adf7f00bd7446):<br>
+In this stage, I created new columns including Avg Actor Age, Older Actor, and Profit (Millions). I also binned average actor age into ranges for plotting. This version introduced the first meaningful visualisations showing relationships between age variables and financial outcomes.</p></li>
+<li><p>Version 4 (879e29f8351d3147b35137134670427599971e40):<br>
+Wrote and added the first full draft of the blog post, structured around motivation, data, analysis, and conclusions. Each visualisation was embedded with its explanation. This version focused purely on narrative clarity and alignment with the rubric.</p></li>
+<li><p>Version 5 ():<br>
+This is the final submitted version after adding behind the scenes section, data dictionary, readme, and CSS and JS to style the report and blog to give it a personal touch. The writting was also refined and AI acknowledgement was also added.</p></li>
+</ul>
+</section>
 </section>
 </div>
 </div>
-</div>
+<script>
+function activateTab(tabId) {
+  const buttons = document.querySelectorAll('.tab-button');
+  const panels = document.querySelectorAll('.tab-panel');
+  const container = document.getElementById('tab-content');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  panels.forEach(p => p.classList.remove('active'));
+  container.classList.remove('tab1-bg', 'tab2-bg', 'tab3-bg');
+
+  document.getElementById(tabId).classList.add('active');
+  document.getElementById('panel-' + tabId).classList.add('active');
+  container.classList.add(tabId + '-bg');
+}
+</script>
 
 </main>
 <!-- /main column -->

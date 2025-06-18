@@ -2,9 +2,14 @@
 title: "Does Age Matter in Hollywood Casting? What the Numbers Say"
 subtitle: "Assignment 4 ETC5512"
 author: "Parth Tendulkar"
-format: html
-editor: visual
+format: 
+  html:
+    css: tabs.css
+    toc: false
+    page-layout: full
+    theme: flatly
 ---
+
 
 ```{r setup, include = TRUE, echo = FALSE, cache = FALSE}
 knitr::opts_chunk$set(
@@ -14,32 +19,39 @@ knitr::opts_chunk$set(
 )
 ```
 
+::: {.tab-buttons}
 
-::: panel-tabset
-<!-- Task 1 Tab: Data and Documenting -->
+<div>
+  <button class="tab-button active" id="tab1" onclick="activateTab('tab1')">📊 Data</button>
+  <button class="tab-button" id="tab2" onclick="activateTab('tab2')">📝 Blog</button>
+  <button class="tab-button" id="tab3" onclick="activateTab('tab3')">🎬 Behind</button>
+</div>
 
+:::
+:::::: {#tab-content .tab-content .tab1-bg}
+::: {#panel-tab1 .tab-panel .active}
 ## Data and Documenting
 
 ### Research Question
 
 <big> **Does the age and gender dynamics of lead actors influence the commercial success of movies?**</big>
 
-Hollywood has historically exhibited a noticeable pattern in casting, where older male actors are frequently paired with significantly younger female counterparts—a trend far less common in reverse. This project aims to examine whether such casting decisions are financially beneficial or merely reflective of entrenched industry biases. To explore this, two datasets were utilized: one containing information on actor ages and gender, and another detailing movie budgets, revenues, and profits. Together, these datasets provided a suitable foundation for analyzing the financial implications of age and gender dynamics in casting.
+Hollywood has historically exhibited a noticeable pattern in casting, with older male actors frequently paired with significantly younger female counterparts—an occurrence far less common in reverse. This project aims to investigate whether such casting decisions are financially beneficial or simply reflective of longstanding industry biases. By combining a dataset containing actor ages and gender with another comprising detailed movie profit information, this analysis seeks to determine whether these casting patterns correlate with financial performance or persist without economic justification.
 
 ### Data Being used
 
-**This analysis draws on two publicly available datasets:**
+**This analysis utilizes two publicly available datasets:**
 
--   [**Movie Revenue Dataset**](https://github.com/ntdoris/movie-revenue-analysis/blob/main/README.md): This dataset includes key financial indicators such as production budget, domestic and international gross earnings, total profit, return on investment (ROI), and film genre.
--   [**Hollywood Age Gap Dataset**](https://hollywoodagegap.com): This dataset captures detailed information on romantic leads in films, including actor names, their ages at the time of the film’s release, character genders, and the age differences between paired actors.
+-   [**Movie Revenue Dataset**](https://github.com/ntdoris/movie-revenue-analysis/blob/main/README.md): This dataset includes information such as production budget, domestic and international gross earnings, total profit, return on investment (ROI), and genre classifications.
+-   [**Hollywood Age Gap Dataset**](https://hollywoodagegap.com): This dataset includes actor names, their ages at the time of each film’s release, character genders, and the age gaps between romantic leads.
 
 **These datasets are well-suited for the objectives of this study for the following reasons:**
 
--   They collectively address both financial performance and casting patterns based on age and gender.
--   Relevant variables (e.g., age, gender, profit, ROI) are clearly defined and readily available.
--   The datasets are cleanly structured and easy to process for exploratory and comparative analysis.
--   The Hollywood Age Gap dataset does not have a formal license but permits usage with proper attribution, which has been acknowledged.
--   Both datasets are publicly accessible and appropriate for the level of analysis required in this assignment.
+-   Together, these datasets provide comprehensive coverage of both financial performance and casting demographics.
+-   Key variables required for analysis (age, profit, ROI, gender) are readily available and well-structured.
+-   Data is in a clean and accessible format, facilitating efficient processing and exploration.
+-   The age gap dataset does not have a formal license but permits use with attribution, which will be appropriately cited.
+-   Both datasets are suitable sample sources for the analytical scope expected at this academic level.
 
 ### Downloading Data
 
@@ -64,6 +76,8 @@ Hollywood has historically exhibited a noticeable pattern in casting, where olde
 
 1.  **Load Libraries**
 
+Loading all the essential libraries for data exploration and analysis.
+
 ```{r Load Libraries}
 
 library(tidyverse)
@@ -77,6 +91,8 @@ library(scales)
 
 2.  **Read in the Data**
 
+Read in the downloaded CSV's in dataframes.
+
 ```{r Read Data}
 
 age_gaps_raw <- read_csv(here("data/movies.csv"))
@@ -86,6 +102,8 @@ revenue_raw <- read_csv(here("data/final_dataset.csv"))
 ```
 
 3.  **Cleaning Data**
+
+Convert movie names in both datasets to lowercase (or any consistent format) to make sure they match properly during the join. Titles might look the same visually but mismatch due to case differences, extra spaces, or punctuation, so this helps avoid losing valid matches.
 
 ```{r}
 
@@ -99,6 +117,8 @@ revenue_clean <- revenue_raw %>%
 
 4.  **join datasets**
 
+Join datasets using Movie names and release year and drop all the non matches so that we can use this data for accurate analysis.
+
 ```{r Join Datasets}
 
 joined_data <- age_gaps_clean %>%
@@ -111,7 +131,14 @@ joined_data <- joined_data %>%
 
 ```
 
-5.  **create new variable**
+5.  **create new variables**
+
+Creating new variables:
+
+-   `Older Actor`       : Out of the pair what gender actor is older.  
+-   `Avg Actor Age`     : Mean of `Actor 1 Age` and `Actor 2 Age`.  
+-   `Profit (Millions)` : Profit the movie made in Millions for easier understanding.
+-   `Age Group`         : Actor age binned into groups.
 
 ```{r new_variables}
 
@@ -135,7 +162,7 @@ joined_data <- joined_data %>%
 
 ```
 
-6.  Plot 1: Average Actor Age vs Profit
+6.  **Plot 1: Average Actor Age vs Profit**
 
 ```{r}
 
@@ -147,6 +174,8 @@ p1 <- ggplot(joined_data, aes(x = `Age Group`, y = `Profit (Millions)`, fill = `
   theme_minimal()
 
 ```
+
+7.  **Plot 2: Age Difference vs Profit and ROI**
 
 ```{r}
 
@@ -179,7 +208,7 @@ age_diff <- p2 + p3
 
 
 ```
-
+8.  **Plot 2: Older Actor Gender vs Profit and ROI**
 ```{r}
 
 p4 <- ggplot(joined_data, aes(x = `Older Actor`, y = `Profit (Millions)`, fill = `Older Actor`)) +
@@ -206,31 +235,35 @@ p5 <- ggplot(joined_data, aes(x = `Older Actor`, y = roi, fill = `Older Actor`))
 older_actor_plot <- p4 + p5
 ```
 
-### Remember
+### Addtional Information
 
 Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
 
-<!-- Task 2 Tab: Writing your blogpost -->
+:::
 
+::: {#panel-tab2 .tab-panel}
 ## Blog post
 
 ### Motivation
 
-One thing that’s always stood out to me in movies is how often we see older male leads paired with much younger female love interests. It’s a pattern that’s been normalized in Hollywood for decades — but I started wondering, does it actually pay off? Are these casting choices boosting a film’s profits, or are they just outdated traditions that filmmakers keep following without question?
+One thing you see all the time in movies is older male leads being cast opposite much younger female love interests. It’s been the norm in Hollywood for decades — so much so that most people barely question it anymore.
+
+But I started wondering: does this actually make financial sense? Are these casting choices boosting a film’s profits, or are they just outdated habits that the industry keeps repeating?
 
 ### Data
 
 To explore the link between casting age gaps and movie profitability, I used two main datasets.
 
-The first came from [hollywoodagegap.com](hollywoodagegap.com), which lists romantic lead pairings in movies — including how old both actors were at the time of release, who was older, and the size of the age gap.
+The first came from [hollywoodagegap.com](hollywoodagegap.com), which includes details on romantic leads — how old each actor was at the time of the movie, who was older, and the size of the age gap.
 
-The second dataset, sourced from [GitHub Repository](https://github.com/ntdoris/movie-revenue-analysis), contained movie revenue details such as production budget, domestic and international gross, total profit, and return on investment (ROI).
+The second dataset, sourced from [GitHub Repository](https://github.com/ntdoris/movie-revenue-analysis), with info like production budget, domestic and international gross, total profit, and ROI.
 
-After cleaning both datasets, I merged them using the movie title and release year. To make the analysis more meaningful, I only kept rows that matched accurately. I also created a new column to indicate whether the man, woman, or neither was older in each pairing, and calculated the average age of the two leads. This average actor age was then grouped into age brackets (15–30, 31–40, etc.) to help uncover any trends across different age groups.
+I cleaned both datasets and matched them using the movie title and release year. To keep things accurate, I only used rows that matched correctly. I also added a new column to identify whether the older actor in the romantic pair was the man, the woman, or if they were the same age. Finally, I calculated the average age of the pair and grouped it into bins like 15–30, 31–40, and so on — this helped make the analysis more structured and insightful.
+
 
 ### Analysis
 
-#### Do younger romantic leads lead to higher profits?
+#### <big>**Do younger romantic leads lead to higher profits?**</big>
 
 ```{r echo=FALSE}
 
@@ -239,13 +272,11 @@ p1
 ```
 
 
-The first plot shows how profit varies with the average age of romantic leads, grouped into age bins (15–30, 31–40, etc.) using a violin plot.
+The first plot examined how the average age of romantic leads relates to profit, using age bins like 15–30, 31–40, etc., shown through a violin plot. The 15–30 group had the widest profit range with some standout outliers, suggesting a few highly profitable films. As the age group increased, profits declined and became more tightly packed. The 60+ group was the most stable in terms of profit variation but had the lowest overall returns.
 
-Movies with younger leads (15–30) had the widest range of profits, including several major outliers. As the age increased, profits tended to drop and became more tightly clustered. The 60+ group was the most consistent but earned the least.
+This suggests that films with younger romantic leads tend to be more profitable — possibly because they receive more marketing, target broader audiences, or belong to more commercial genres.
 
-This suggests that younger lead pairings may be more profitable, likely due to broader audience appeal, stronger marketing, or more commercial genres.
-
-#### What happens when the age gap between leads gets larger?
+#### <big>**What happens when the age gap between leads gets larger?**</big>
 
 ```{r echo=FALSE}
 
@@ -253,14 +284,14 @@ age_diff
 
 ```
 
-This next set of plots looked at how the age gap between romantic leads relates to profit and ROI.
+These next two plots looked at how the age gap between romantic leads affects profit and ROI. In both cases, there was a clear downward trend — the larger the age gap, the lower the financial return.
 
-Both showed a clear downward trend — as the age gap increased, financial performance dropped. Most of the high-profit films had age gaps under 10 years. While a few exceptions exist, they were rare.
+Most of the top-performing films had an age gap under 10 years, while movies with bigger gaps generally saw lower profits and ROI. There were a few exceptions, but they were rare.
 
-This suggests that larger age gaps may hurt a film’s success, possibly because audiences don’t relate as well to those pairings.
+This points to a possible disconnect: casting couples with large age differences may not resonate as well with audiences — and it might not pay off at the box office either.
 
 
-#### Does it matter whether the man or woman is older?
+#### <big>**Does it matter whether the man or woman is older?**</big>
 
 ```{r echo=FALSE}
 
@@ -268,27 +299,76 @@ older_actor_plot
 
 ```
 
-Here we compared profit and ROI based on which actor was older — the man, the woman, or if they were the same age.
+These final set of plots compared profit and ROI based on which actor was older — the man, the woman, or if they were the same age.
 
-Profit stayed fairly consistent across all groups. But when it came to ROI, same-age pairings performed best. Interestingly, films with older female leads did just as well — if not slightly better — than those with older male leads.
+Profit levels were fairly consistent across all groups. But when it came to ROI, same-age pairings performed the best. Interestingly, movies with older female leads did just as well — if not slightly better — than those with older male leads.
 
-This challenges the long-standing stereotype that older women hurt box office success. The data suggests otherwise.
+This challenges the old stereotype that older women can’t drive box office success. The data suggests they absolutely can.
 
 ### Conclusion
 
-This analysis suggests that some of Hollywood’s long-standing casting habits don’t hold up financially. Younger romantic leads do tend to generate more profit, but large age gaps between them can actually lower a film’s ROI. Interestingly, same-age pairings came out strongest, especially when it comes to return on investment.
+Overall, this analysis suggests that some of Hollywood’s go-to casting choices aren’t really backed by the numbers.
 
-There’s no real evidence that casting older men with younger women boosts box office performance. If anything, more balanced casting choices may be both creatively richer and commercially smarter. It might be time for studios to rethink what audiences really connect with — and what actually sells.
+Younger romantic leads tend to bring in more profit, while larger age gaps between leads often lead to lower returns. Surprisingly, same-age pairings came out on top for ROI — and there’s no clear advantage to casting older men with younger women.
+
+If anything, the data points toward more balanced casting being a smarter move — both creatively and financially. Maybe it’s time for studios to rethink some of those old habits.
 
 ### References
 
-<!-- Task 3 Tab: Behind the Scenes -  -->
+:::
+
+::: {#panel-tab3 .tab-panel}
 
 ## Behind the Scenes
 
-### What's in this section
+### Unseen Work
 
-Here is where you should tell us about your reflection on your analysis (Task 3).
+There was definitely a lot of behind-the-scenes wrangling that didn’t make it to the blog. Matching the two datasets by movie title and release year was super tedious — some titles were formatted differently or had weird characters, so I had to manually clean a bunch. Also, just checking if age differences and gender columns made sense after merging took time. Creating the "who’s older" column seemed simple but ended up needing a few logic tweaks to get right. Most of the time went into cleaning stuff that should’ve just worked.
 
-Again, these are the details about **your** perspective and the gritty details behind the scenes of your analysis.
+### Challenges Faced
+
+Biggest challenge was merging the two datasets properly. I assumed it would be a straight match on movie title + year, but even small title changes (like extra spaces or colons) threw things off. I also didn’t expect profit to have such massive values that it had to be displayed in millions. Another challenge was figuring out how to represent profit when values were both negative and positive — some plots didn’t handle that well.
+
+### Future Improvements
+
+One major limitation is that this only looks at a subset of movies — the ones that exist in both datasets. So the sample size could be biased. Also, I didn’t factor in genres or budget scale, which might affect profit trends. Ideally, I’d add genre grouping or control for budget levels next time. Another thing: I didn’t include any qualitative stuff like reviews or audience scores, which could show why certain age gaps don’t work.
+
+### Iteration Process (5 versions)
+
+-   Version 1 (4d61aa2169d856722a994f09c01748034aab4089):  
+In this first version, I loaded both datasets and previewed the structure. I attempted to join them by movie title only, but this led to poor match rates. The goal here was to understand the variables and check if there was potential for deeper analysis.
+
+-   Version 2 (d3c5e1f86fcc273e7e78d06f4e8ea4adde2b478c):  
+This version addressed the matching issue by trimming and lowercasing movie titles and joining them using both name and year. This improved the dataset integrity. Non-matching rows were dropped so only valid pairs remained. This version established a clean base for reliable analysis.
+
+-   Version 3 (2eb456c9781e68cacb85aa83b13adf7f00bd7446):  
+In this stage, I created new columns including Avg Actor Age, Older Actor, and Profit (Millions). I also binned average actor age into ranges for plotting. This version introduced the first meaningful visualisations showing relationships between age variables and financial outcomes.
+
+-   Version 4 (879e29f8351d3147b35137134670427599971e40):  
+Wrote and added the first full draft of the blog post, structured around motivation, data, analysis, and conclusions. Each visualisation was embedded with its explanation. This version focused purely on narrative clarity and alignment with the rubric.
+
+-   Version 5 ():  
+This is the final submitted version after adding behind the scenes section, data dictionary, readme, and CSS and JS to style the report and blog to give it a personal touch. The writting was also refined and AI acknowledgement was also added.
+
+
+
 :::
+::::::
+
+```{=html}
+<script>
+function activateTab(tabId) {
+  const buttons = document.querySelectorAll('.tab-button');
+  const panels = document.querySelectorAll('.tab-panel');
+  const container = document.getElementById('tab-content');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  panels.forEach(p => p.classList.remove('active'));
+  container.classList.remove('tab1-bg', 'tab2-bg', 'tab3-bg');
+
+  document.getElementById(tabId).classList.add('active');
+  document.getElementById('panel-' + tabId).classList.add('active');
+  container.classList.add(tabId + '-bg');
+}
+</script>
+```
