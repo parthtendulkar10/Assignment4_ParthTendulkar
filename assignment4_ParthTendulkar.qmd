@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 <div>
   <button class="tab-button active" id="tab1" onclick="activateTab('tab1')">📊 Data</button>
   <button class="tab-button" id="tab2" onclick="activateTab('tab2')">📝 Blog</button>
-  <button class="tab-button" id="tab3" onclick="activateTab('tab3')">🎬 Behind</button>
+  <button class="tab-button" id="tab3" onclick="activateTab('tab3')">🎬 Behind the Scenes</button>
 </div>
 
 :::
