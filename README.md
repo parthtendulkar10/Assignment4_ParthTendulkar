@@ -36,6 +36,8 @@ Please use this project responsibly. The goal is to explore patterns in a fair a
 
 ## Versioning ##
 
+GitHub Repository : https://github.com/parthtendulkar10/Assignment4_ParthTendulkar
+
 The project progressed iteratively through 5 versions. Each version was committed with meaningful changes including cleaning, joining, feature engineering, narrative drafting, and final layout polish. A summary of each version can be found in the Behind the Scenes section of the report.
 
 ## Limitations and Privacy Considerations ##
