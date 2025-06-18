@@ -1,16 +1,24 @@
 ---
-title: "What is your blogpost title? Add it here??"
+title: "Does Age Matter in Hollywood Casting? What the Numbers Say"
 subtitle: "Assignment 4 ETC5512"
 author: "Parth Tendulkar"
 format: html
 editor: visual
 ---
 
+```{r setup, include = TRUE, echo = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
 ::: panel-tabset
 <!-- Task 1 Tab: Data and Documenting -->
 
 ## Data and Documenting
-
 
 ### Research Question
 
@@ -50,7 +58,6 @@ Hollywood has historically exhibited a noticeable pattern in casting, where olde
 -   Download the file:
     -   Click on the dataset file.
     -   Click the **"Download raw file"** button.\
-    
 -   Save the downloaded **CSV file** into the `data` folder within the project directory to ensure proper access during analysis.
 
 ### Data Analysis
@@ -77,7 +84,8 @@ age_gaps_raw <- read_csv(here("data/movies.csv"))
 revenue_raw <- read_csv(here("data/final_dataset.csv"))
 
 ```
-3. **Cleaning Data**
+
+3.  **Cleaning Data**
 
 ```{r}
 
@@ -89,8 +97,7 @@ revenue_clean <- revenue_raw %>%
 
 ```
 
-
-4. **join datasets**
+4.  **join datasets**
 
 ```{r Join Datasets}
 
@@ -102,11 +109,9 @@ joined_data <- age_gaps_clean %>%
 joined_data <- joined_data %>%
   filter(!is.na(production_budget))
 
-glimpse(joined_data)
-
 ```
 
-5. **create new variable**
+5.  **create new variable**
 
 ```{r new_variables}
 
@@ -130,7 +135,7 @@ joined_data <- joined_data %>%
 
 ```
 
-6. Plot 1: Average Actor Age vs Profit
+6.  Plot 1: Average Actor Age vs Profit
 
 ```{r}
 
@@ -141,7 +146,6 @@ p1 <- ggplot(joined_data, aes(x = `Age Group`, y = `Profit (Millions)`, fill = `
        x = "Average Actor Age Group", y = "Profit (Millions USD)") +
   theme_minimal()
 
-p1
 ```
 
 ```{r}
@@ -171,7 +175,7 @@ p3 <- ggplot(joined_data, aes(x = `Age Difference`, y = roi)) +
   theme_minimal()
 
 # Combine side by side
-p2 + p3
+age_diff <- p2 + p3
 
 
 ```
@@ -199,9 +203,7 @@ p5 <- ggplot(joined_data, aes(x = `Older Actor`, y = roi, fill = `Older Actor`))
   ) +
   theme_minimal()
 
-# Combine side-by-side
-p4 + p5
-
+older_actor_plot <- p4 + p5
 ```
 
 ### Remember
@@ -212,20 +214,73 @@ Please mention any additional files that you want the markers to review, eg. rea
 
 ## Blog post
 
-### What's in this section
+### Motivation
 
-Here is where you should write your blogpost! (Task 2)
+One thing that’s always stood out to me in movies is how often we see older male leads paired with much younger female love interests. It’s a pattern that’s been normalized in Hollywood for decades — but I started wondering, does it actually pay off? Are these casting choices boosting a film’s profits, or are they just outdated traditions that filmmakers keep following without question?
 
-### Blogpost Structure
+### Data
 
-There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+To explore the link between casting age gaps and movie profitability, I used two main datasets.
 
-1.  Title (is set at the top of this document)
-2.  Motivation\
-3.  Data\
-4.  Analysis\
-5.  Conclusions\
-6.  References
+The first came from [hollywoodagegap.com](hollywoodagegap.com), which lists romantic lead pairings in movies — including how old both actors were at the time of release, who was older, and the size of the age gap.
+
+The second dataset, sourced from [GitHub Repository](https://github.com/ntdoris/movie-revenue-analysis), contained movie revenue details such as production budget, domestic and international gross, total profit, and return on investment (ROI).
+
+After cleaning both datasets, I merged them using the movie title and release year. To make the analysis more meaningful, I only kept rows that matched accurately. I also created a new column to indicate whether the man, woman, or neither was older in each pairing, and calculated the average age of the two leads. This average actor age was then grouped into age brackets (15–30, 31–40, etc.) to help uncover any trends across different age groups.
+
+### Analysis
+
+#### Do younger romantic leads lead to higher profits?
+
+```{r echo=FALSE}
+
+p1
+
+```
+
+
+The first plot shows how profit varies with the average age of romantic leads, grouped into age bins (15–30, 31–40, etc.) using a violin plot.
+
+Movies with younger leads (15–30) had the widest range of profits, including several major outliers. As the age increased, profits tended to drop and became more tightly clustered. The 60+ group was the most consistent but earned the least.
+
+This suggests that younger lead pairings may be more profitable, likely due to broader audience appeal, stronger marketing, or more commercial genres.
+
+#### What happens when the age gap between leads gets larger?
+
+```{r echo=FALSE}
+
+age_diff
+
+```
+
+This next set of plots looked at how the age gap between romantic leads relates to profit and ROI.
+
+Both showed a clear downward trend — as the age gap increased, financial performance dropped. Most of the high-profit films had age gaps under 10 years. While a few exceptions exist, they were rare.
+
+This suggests that larger age gaps may hurt a film’s success, possibly because audiences don’t relate as well to those pairings.
+
+
+#### Does it matter whether the man or woman is older?
+
+```{r echo=FALSE}
+
+older_actor_plot
+
+```
+
+Here we compared profit and ROI based on which actor was older — the man, the woman, or if they were the same age.
+
+Profit stayed fairly consistent across all groups. But when it came to ROI, same-age pairings performed best. Interestingly, films with older female leads did just as well — if not slightly better — than those with older male leads.
+
+This challenges the long-standing stereotype that older women hurt box office success. The data suggests otherwise.
+
+### Conclusion
+
+This analysis suggests that some of Hollywood’s long-standing casting habits don’t hold up financially. Younger romantic leads do tend to generate more profit, but large age gaps between them can actually lower a film’s ROI. Interestingly, same-age pairings came out strongest, especially when it comes to return on investment.
+
+There’s no real evidence that casting older men with younger women boosts box office performance. If anything, more balanced casting choices may be both creatively richer and commercially smarter. It might be time for studios to rethink what audiences really connect with — and what actually sells.
+
+### References
 
 <!-- Task 3 Tab: Behind the Scenes -  -->
 
